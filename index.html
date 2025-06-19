@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Globe with Filter</title>
+  <style>
+    body {
+  margin: 0;
+  overflow: hidden;
+  background-image: url('./background-thumbnail.png');
+  background-size: 1260px;
+  background-repeat: no-repeat;
+
+  height: 3000px;
+}
+
+#container {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: flex-start !important;
+  justify-content: center;
+  margin-top: 240px;
+  margin-left: 150px;
+  max-width: 920px;
+}
+
+
+#yearSidebar {
+  font-family: monospace;
+  font-size: 14px;
+  border-radius: 15px;
+  padding: 10px;
+  overflow-y: auto;
+  margin-right: 10px;
+  min-width: 130px;
+}
+
+#globeWrapper {
+  width: 1500px;
+  height: 500px;
+  margin: 0 auto;
+  overflow: hidden;
+  border-radius: 15px;
+  position: relative;
+}
+
+#globeViz {
+  width: 50%;
+  height: 50%;
+}
+
+canvas {
+  display: block;
+  margin: 0 auto;
+  max-width: 100%;
+  height: auto;
+}
+
+
+
+.year-item {
+  cursor: pointer;
+  margin: 3px 0;
+  padding: 2px 6px;
+  border-radius: 3px;
+  font-size: 12px;
+}
+
+.year-item.active {
+  font-weight: bold;
+}
+
+#tooltip {
+  position: absolute;
+  background: rgba(0, 0, 0, 0.85);
+  color: white;
+  padding: 10px;
+  border-radius: 5px;
+  font-family: Monospace;
+  font-size: 13px;
+  z-index: 1000;
+  pointer-events: none;
+}
+
+#tooltip.hidden {
+  display: none;
+}
+
+#closeTooltip {
+  position: absolute;
+  top: 2px;
+  right: 4px;
+  background: transparent;
+  border: none;
+  color: white;
+  font-weight: bold;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+  </style>
+
+  <script src="https://cdn.jsdelivr.net/npm/globe.gl"></script>
+  <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+</head>
+<body>
+
+<div id="tooltip" class="hidden">
+  <div id="tooltipContent"></div>
+  <button id="closeTooltip">x</button>
+</div>
+
+<div id="container">
+  <div id="yearSidebar"></div>
+  <div id="globeWrapper">
+  <div id="globeViz"></div>
+</div>
+</div>
+
+<script>
+  const globe = Globe()
+  .globeImageUrl('./map-vibrant-3.png')
+  .backgroundColor('rgba(0,0,0,0)')
+  .width(1000)
+  .height(900)
+  (document.getElementById('globeViz'));
+
+
+  globe.enablePointerInteraction(true);
+  globe.lineHoverPrecision(0.2);
+  globe.pointOfView({ lat: -140.0, lng: 10.0, altitude: -3.5 }, 0);
+
+const leipzigMarker = [{
+  lat: 51.29408756923266,
+  lng: 12.409851431478888,
+  size: 56,
+  title: "Zoo Leipzig"
+}];
+
+globe
+  .htmlElementsData(leipzigMarker)
+  .htmlElement(d => {
+    const el = document.createElement('div');
+    el.innerHTML = `<img src="./zoo_leipzig_logo.svg" title="${d.title}" style="width: ${d.size}px;">`;
+    el.style.pointerEvents = 'none';
+    return el;
+  })
+  .htmlElementVisibilityModifier((el, visible) => {
+    el.style.opacity = visible ? 1 : 0;
+  });
+
+  const tooltip = document.getElementById('tooltip');
+  const tooltipContent = document.getElementById('tooltipContent');
+  const closeTooltip = document.getElementById('closeTooltip');
+  closeTooltip.addEventListener('click', () => tooltip.classList.add('hidden'));
+
+  let fullData = [];
+
+  fetch('./geotest-update.csv')
+    .then(res => res.text())
+    .then(csv => {
+      const parsed = Papa.parse(csv, { header: true });
+      fullData = parsed.data.filter(d => d.fin_lat && d.fin_lon);
+
+      const yearCounts = {};
+      fullData.forEach(d => {
+        const y = d.jahr;
+        if (!yearCounts[y]) yearCounts[y] = 0;
+        yearCounts[y]++;
+      });
+
+      const sortedYears = Object.keys(yearCounts).sort();
+      const sidebar = document.getElementById('yearSidebar');
+      sidebar.innerHTML = '';
+
+      const allItem = document.createElement('div');
+      allItem.className = 'year-item active';
+      allItem.textContent = `Alle Reisen (${fullData.length})`;
+      allItem.dataset.year = 'all';
+      sidebar.appendChild(allItem);
+      
+
+      sortedYears.forEach(year => {
+        const div = document.createElement('div');
+        div.className = 'year-item';
+        div.textContent = `${year} (${yearCounts[year]})`;
+        div.dataset.year = year;
+        sidebar.appendChild(div);
+      });
+
+      sidebar.addEventListener('click', e => {
+        const target = e.target.closest('.year-item');
+        if (!target) return;
+        sidebar.querySelectorAll('.year-item').forEach(el => el.classList.remove('active'));
+        target.classList.add('active');
+        renderPoints(target.dataset.year);
+      });
+
+      renderPoints('all');
+    });
+
+
+    
+  function renderPoints(selectedYear) {
+    const filtered = selectedYear === 'all'
+      ? fullData
+      : fullData.filter(d => d.jahr === selectedYear);
+
+    globe.labelsData(filtered)
+      .labelLat(d => +d.fin_lat)
+      .labelLng(d => +d.fin_lon)
+      .labelText(d => d.stadt)
+      .labelSize(0.23)
+      .labelDotRadius(0.275)
+      .labelDotOrientation(() => 'center')
+      .labelColor(() => 'rgba(36, 93, 24, 0.7)')
+      .labelResolution(2);
+
+    globe
+  .onLabelHover((d, prev) => {
+    if (d) {
+      tooltipContent.innerHTML = `
+        <b>Zoo:</b> ${d.zoo_name}<br>
+        <b>Ort:</b> ${d.stadt}<br>
+        <b>Jahr:</b> ${d.jahr}<br>
+        <b>Land:</b> ${d.land}
+      `;
+      tooltip.classList.remove('hidden');
+    } else {
+      tooltip.classList.add('hidden');
+    }
+  });
+
+    const arcsData = filtered.map(d => ({
+      startLat: d.start_lat,
+      startLng: d.start_lon,
+      endLat: +d.fin_lat,
+      endLng: +d.fin_lon,
+      color: ['#ffffff', '#FFFF00']
+    }));
+  
+
+    globe.arcsData(arcsData)
+    
+      .arcAltitudeAutoScale(0.15)
+      .arcColor('color')
+      .arcDashLength(() => 0.6)
+      .arcDashGap(() => 0.05)
+      .arcDashInitialGap(() => Math.random())
+      .arcDashAnimateTime(() => 1000)
+      .arcStroke(0.27);
+  }
+
+  globe.onLabelHover((d, prev, event) => {
+  console.log('hovered at', event.clientX, event.clientY, 'on', d);});
+
+  document.addEventListener('mousemove', (e) => {
+  tooltip.style.left = `${e.clientX}px`;
+  tooltip.style.top = `${e.clientY}px`;
+});
+</script>
+</body>
+</html>
