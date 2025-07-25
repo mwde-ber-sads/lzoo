@@ -5,99 +5,183 @@
   <title>Globe with Filter</title>
   <style>
     body {
-  margin: 0;
-  overflow: hidden;
-  background-image: url('./background-thumbnail.png');
-  background-size: 1260px;
-  background-repeat: no-repeat;
+      margin: 0;
 
-  height: 3000px;
+      background-image: url('./background-thumbnail.png');
+      background-size: 1260px;
+      background-repeat: no-repeat;
+      height: 3000px;
+
+    }
+
+    #container {
+      display: flex;
+      flex-direction: row;
+      align-items: flex-start;
+      justify-content: center;
+      margin-top: 240px;
+      margin-left: 150px;
+      max-width: 900px;
+      position: relative;
+       font-family: 'Noto Sans';
+    }
+
+ 
+#infoPanel {
+  position: absolute;
+  top: 20px;
+  left: 230px;
+  display: flex;
+  gap: 30px;
+  
+  background-color: rgba(255, 255, 255, 0.4);
+  padding: 20px 20px;
+  border-radius: 5px;
+  backdrop-filter: blur(2px);
+  z-index: 50;
+  margin-right: 20px;
 }
 
-#container {
-  display: flex !important;
-  flex-direction: row !important;
-  align-items: flex-start !important;
-  justify-content: center;
-  margin-top: 240px;
-  margin-left: 150px;
-  max-width: 920px;
+
+    #yearSidebar {
+      
+      font-size: 20px;
+      line-height: 10px;
+      border-radius: 5px;
+      padding: 20px;
+      margin-right: 10px;
+      width: 150px;
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      max-height: 600px;
+      background-color: rgba(255, 255, 255, 0.4);
+      backdrop-filter: blur(4px);
+      z-index: 10;
+    }
+
+
+
+    #infoBar {
+      position: absolute;
+      left: 0;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+     
+      font-size: 20px;
+      color: #222;
+      z-index: 10;
+    }
+
+    #infoPanel, #yearSidebar {
+  pointer-events: none; /* Пропускают мышь сквозь себя */
+
 }
 
-
-#yearSidebar {
-  font-family: monospace;
-  font-size: 14px;
-  border-radius: 15px;
-  padding: 10px;
-  overflow-y: auto;
-  margin-right: 10px;
-  min-width: 130px;
+#infoPanel * , #yearSidebar * {
+  
+  pointer-events: auto; /* Но сами текстовые элементы всё равно кликабельны */
 }
 
-#globeWrapper {
+    .info-block {
+      padding: 8px 12px;
+      background: rgba(255,255,255,0.85);
+      border-radius: 6px;
+      min-width: 120px;
+      text-align: center;
+      box-shadow: 0 0 6px rgba(0,0,0,0.1);
+    }
+
+    #sidebar-tip {
+      font-size: 14px;
+      line-height: 16px;
+      font-style: italic;
+      margin: 0px 0px 0px 0px;
+      color: #285d18;
+    }
+
+    #sidebar-tip-2 {
+      width: 200px;
+      font-size: 14px;
+      line-height: 16px;
+      font-style: italic;
+      margin: 0px 0px 0px 0px;
+      color: #285d18;
+    }
+
+    .info-value {
+      font-weight: 700;
+      color: #285d18;
+    }
+
+
+    #footerNote {
+      position: absolute;
+      left: 25px;
+      bottom: 15px;
+      font-size: 8px;
+      color: #285d18;
+      padding: 5px;
+      border-radius: 5px;
+      z-index: 5;
+      line-height: 2px;
+    }
+
+    .decade-header {
+      cursor: pointer;
+      font-size: 12px;
+      margin-top: 12px;
+      color: #647e5c;
+      border-top: solid;
+      padding-top: 10px;
+    }
+
+    .year-list.hidden {
+      display: none;
+    }
+
+    .year-list {
+      
+    }
+
+    #globeWrapper {
   width: 1500px;
-  height: 500px;
+  height: 700px;
   margin: 0 auto;
-  overflow: hidden;
-  border-radius: 15px;
   position: relative;
 }
 
+#globeClip {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  position: absolute;
+}
+
 #globeViz {
-  width: 50%;
-  height: 50%;
+  width: 100%;
+  height: 100%;
 }
 
-canvas {
-  display: block;
-  margin: 0 auto;
-  max-width: 100%;
-  height: auto;
-}
+    canvas {
+      display: block;
+      margin: 0 auto;
+      max-width: 100%;
+      height: auto;
+    }
 
+    .year-item {
+      cursor: pointer;
+      padding-top: 16px;
+      font-size: 14px;
+      color: #285d18;
+      font-weight: 500;
+    }
 
-
-.year-item {
-  cursor: pointer;
-  margin: 3px 0;
-  padding: 2px 6px;
-  border-radius: 3px;
-  font-size: 12px;
-}
-
-.year-item.active {
-  font-weight: bold;
-}
-
-#tooltip {
-  position: absolute;
-  background: rgba(0, 0, 0, 0.85);
-  color: white;
-  padding: 10px;
-  border-radius: 5px;
-  font-family: Monospace;
-  font-size: 13px;
-  z-index: 1000;
-  pointer-events: none;
-}
-
-#tooltip.hidden {
-  display: none;
-}
-
-#closeTooltip {
-  position: absolute;
-  top: 2px;
-  right: 4px;
-  background: transparent;
-  border: none;
-  color: white;
-  font-weight: bold;
-  font-size: 14px;
-  cursor: pointer;
-}
-
+    .year-item.active {
+      font-weight: bold;
+    }
   </style>
 
   <script src="https://cdn.jsdelivr.net/npm/globe.gl"></script>
@@ -105,54 +189,79 @@ canvas {
 </head>
 <body>
 
-<div id="tooltip" class="hidden">
-  <div id="tooltipContent"></div>
-  <button id="closeTooltip">x</button>
-</div>
 
 <div id="container">
+  
+  <div id="infoPanel">
+    <div>Jahr<br><span class="info-value" id="info-year">-</span></div>
+    <div>Land<br><span class="info-value" id="info-country">-</span></div>
+    <div>Zoo<br><span class="info-value" id="info-zoo">-</span></div>
+    
+
+  </div>
+  <div>
+    <div id="footerNote">
+      Der interaktive Globus wurde von Yaroslav Boretsky mit Globe.GL und ChatGPT erstellt.
+     <p> Globetextur Copyright: Texture Free HD 20k x10K Earth World Map Texture By Giallo86</div>
+    
+  </div>
   <div id="yearSidebar"></div>
+  
   <div id="globeWrapper">
-  <div id="globeViz"></div>
+     <div id="globeClip">
+    <div id="globeViz"></div></div>
+  </div>
 </div>
-</div>
+
 
 <script>
+  
+let currentSelectedYear = 'all'; 
+  
+const tip2 = document.createElement('p');
+      tip2.id = 'sidebar-tip-2'
+tip2.textContent = 'Klicken Sie auf eine Stadt auf dem Globus, um den Zoonamen und Infos zu sehen';
+
+infoPanel.insertBefore(tip2, infoPanel.firstChild);
+  
+  const yearBox = document.getElementById('info-year');
+const countryBox = document.getElementById('info-country');
+const zooBox = document.getElementById('info-zoo');
+
+
   const globe = Globe()
-  .globeImageUrl('./map-vibrant-3.png')
-  .backgroundColor('rgba(0,0,0,0)')
-  .width(1000)
-  .height(900)
-  (document.getElementById('globeViz'));
+    .globeImageUrl('./map-mash.jpg')
+    .backgroundColor('rgba(0,0,0,0)')
+    .width(900)
+    .height(900)
+    .atmosphereColor('rgba(255,255,255,0)')  
+    .atmosphereAltitude(0.15)
+    (document.getElementById('globeViz'));
 
-
+  globe.showAtmosphere(true);
   globe.enablePointerInteraction(true);
-  globe.lineHoverPrecision(0.2);
-  globe.pointOfView({ lat: -140.0, lng: 10.0, altitude: -3.5 }, 0);
+  globe.lineHoverPrecision(0.1);
 
-const leipzigMarker = [{
-  lat: 51.29408756923266,
-  lng: 12.409851431478888,
-  size: 56,
-  title: "Zoo Leipzig"
-}];
+  const leipzigMarker = [{
+    lat: 51.33408756923266,
+    lng: 12.379851431478888,
+    size: 65,
+    title: "Zoo Leipzig"
+  }];
 
-globe
-  .htmlElementsData(leipzigMarker)
-  .htmlElement(d => {
-    const el = document.createElement('div');
-    el.innerHTML = `<img src="./zoo_leipzig_logo.svg" title="${d.title}" style="width: ${d.size}px;">`;
-    el.style.pointerEvents = 'none';
-    return el;
-  })
-  .htmlElementVisibilityModifier((el, visible) => {
-    el.style.opacity = visible ? 1 : 0;
-  });
+  
+  globe
+    .htmlElementsData(leipzigMarker)
+    .htmlElement(d => {
+      const el = document.createElement('div');
+      el.innerHTML = `<img src="./zoo_leipzig_logo.svg" title="${d.title}" style="width: ${d.size}px;">`;
+      el.style.pointerEvents = 'none';
+      return el;
+    })
+    .htmlElementVisibilityModifier((el, visible) => {
+      el.style.opacity = visible ? 0.85 : 1;
+    });
 
-  const tooltip = document.getElementById('tooltip');
-  const tooltipContent = document.getElementById('tooltipContent');
-  const closeTooltip = document.getElementById('closeTooltip');
-  closeTooltip.addEventListener('click', () => tooltip.classList.add('hidden'));
 
   let fullData = [];
 
@@ -162,33 +271,72 @@ globe
       const parsed = Papa.parse(csv, { header: true });
       fullData = parsed.data.filter(d => d.fin_lat && d.fin_lon);
 
-      const yearCounts = {};
-      fullData.forEach(d => {
-        const y = d.jahr;
-        if (!yearCounts[y]) yearCounts[y] = 0;
-        yearCounts[y]++;
-      });
-
-      const sortedYears = Object.keys(yearCounts).sort();
       const sidebar = document.getElementById('yearSidebar');
       sidebar.innerHTML = '';
+
+      const tip = document.createElement('p');
+      tip.id = 'sidebar-tip'
+tip.textContent = 'Klicke auf eine Dekade unten, um ein Jahr der Vereinsreisen auszuwählen';
+
+sidebar.appendChild(tip);
+
+
+
 
       const allItem = document.createElement('div');
       allItem.className = 'year-item active';
       allItem.textContent = `Alle Reisen (${fullData.length})`;
       allItem.dataset.year = 'all';
       sidebar.appendChild(allItem);
-      
 
-      sortedYears.forEach(year => {
-        const div = document.createElement('div');
-        div.className = 'year-item';
-        div.textContent = `${year} (${yearCounts[year]})`;
-        div.dataset.year = year;
-        sidebar.appendChild(div);
+      // Группировка по декадам
+      const decadeMap = {};
+      fullData.forEach(d => {
+        const year = d.jahr;
+        const decade = Math.floor(+year / 10) * 10;
+        if (!decadeMap[decade]) decadeMap[decade] = [];
+        decadeMap[decade].push(d);
+      });
+
+      Object.keys(decadeMap).sort().forEach(decade => {
+        const group = decadeMap[decade];
+        const wrapper = document.createElement('div');
+        wrapper.className = 'decade-group';
+
+        const header = document.createElement('div');
+        header.className = 'decade-header';
+        header.textContent = `${decade}er`;
+        wrapper.appendChild(header);
+
+        const list = document.createElement('div');
+        list.className = 'year-list hidden';
+
+        const yearCounts = {};
+        group.forEach(d => {
+          if (!yearCounts[d.jahr]) yearCounts[d.jahr] = 0;
+          yearCounts[d.jahr]++;
+        });
+
+        Object.keys(yearCounts).sort().forEach(year => {
+          const item = document.createElement('div');
+          item.className = 'year-item';
+          item.textContent = `${year} (${yearCounts[year]})`;
+          item.dataset.year = year;
+          list.appendChild(item);
+        });
+
+        wrapper.appendChild(list);
+        sidebar.appendChild(wrapper);
       });
 
       sidebar.addEventListener('click', e => {
+        const header = e.target.closest('.decade-header');
+        if (header) {
+          document.querySelectorAll('.year-list').forEach(list => list.classList.add('hidden'));
+          header.nextElementSibling.classList.remove('hidden');
+          return;
+        }
+
         const target = e.target.closest('.year-item');
         if (!target) return;
         sidebar.querySelectorAll('.year-item').forEach(el => el.classList.remove('active'));
@@ -199,65 +347,151 @@ globe
       renderPoints('all');
     });
 
+  globe.polygonsTransitionDuration(0);
 
-    
-  function renderPoints(selectedYear) {
-    const filtered = selectedYear === 'all'
-      ? fullData
-      : fullData.filter(d => d.jahr === selectedYear);
 
-    globe.labelsData(filtered)
-      .labelLat(d => +d.fin_lat)
-      .labelLng(d => +d.fin_lon)
-      .labelText(d => d.stadt)
-      .labelSize(0.23)
-      .labelDotRadius(0.275)
-      .labelDotOrientation(() => 'center')
-      .labelColor(() => 'rgba(36, 93, 24, 0.7)')
-      .labelResolution(2);
 
-    globe
-  .onLabelHover((d, prev) => {
-    if (d) {
-      tooltipContent.innerHTML = `
-        <b>Zoo:</b> ${d.zoo_name}<br>
-        <b>Ort:</b> ${d.stadt}<br>
-        <b>Jahr:</b> ${d.jahr}<br>
-        <b>Land:</b> ${d.land}
-      `;
-      tooltip.classList.remove('hidden');
+let geoDDR, geoBRD;
+
+Promise.all([
+  fetch('./deutschland.json').then(res => res.json()),
+  fetch('./ddr.geojson').then(res => res.json())
+]).then(([brdData, ddrData]) => {
+  geoBRD = brdData;
+  geoDDR = ddrData;
+  updateMap(currentSelectedYear); // запуск первой отрисовки
+});
+
+function updateMap(selectedYear) {
+  let polygons = [];
+  let isDDR = false;
+
+  if (selectedYear === 'all') {
+    polygons = geoBRD.features || [];
+  } else {
+    const year = parseInt(selectedYear);
+    if (year < 1989) {
+      polygons = geoDDR.features || [];
+      isDDR = true;
     } else {
-      tooltip.classList.add('hidden');
+      polygons = geoBRD.features || [];
     }
-  });
-
-    const arcsData = filtered.map(d => ({
-      startLat: d.start_lat,
-      startLng: d.start_lon,
-      endLat: +d.fin_lat,
-      endLng: +d.fin_lon,
-      color: ['#ffffff', '#FFFF00']
-    }));
-  
-
-    globe.arcsData(arcsData)
-    
-      .arcAltitudeAutoScale(0.15)
-      .arcColor('color')
-      .arcDashLength(() => 0.6)
-      .arcDashGap(() => 0.05)
-      .arcDashInitialGap(() => Math.random())
-      .arcDashAnimateTime(() => 1000)
-      .arcStroke(0.27);
   }
 
-  globe.onLabelHover((d, prev, event) => {
-  console.log('hovered at', event.clientX, event.clientY, 'on', d);});
+  globe
+    .polygonsData(polygons)
+    .polygonAltitude(() => 0.0005)
+    .polygonCapColor(() => 'rgba(0, 100, 0, 0.2)')
+    .polygonSideColor(() => 'rgba(0, 0, 0, 0)')
+    .polygonStrokeColor(() => '#ffffff');
+}
 
-  document.addEventListener('mousemove', (e) => {
-  tooltip.style.left = `${e.clientX}px`;
-  tooltip.style.top = `${e.clientY}px`;
+  
+
+  function renderPoints(selectedYear) {
+
+currentSelectedYear = selectedYear;
+
+  const filtered = selectedYear === 'all'
+    ? fullData
+    : fullData.filter(d => d.jahr === selectedYear);
+
+  if (selectedYear === 'all') {
+    globe.pointOfView({ lat: -130.0, lng: 10.0, altitude: -3.2 }, 1000);
+  } else if (filtered.length > 0) {
+    const latitudes = filtered.map(d => parseFloat(d.fin_lat)).filter(Number.isFinite);
+    const longitudes = filtered.map(d => parseFloat(d.fin_lon)).filter(Number.isFinite);
+
+    if (latitudes.length === 0 || longitudes.length === 0) return;
+
+    const minLat = Math.min(...latitudes);
+    const maxLat = Math.max(...latitudes);
+    const minLon = Math.min(...longitudes);
+    const maxLon = Math.max(...longitudes);
+
+    const centerLat = (minLat + maxLat) / 2 - 2; // южнее на 2°
+    const centerLon = (minLon + maxLon) / 2;
+
+    const latSpan = maxLat - minLat;
+    const lonSpan = maxLon - minLon;
+    const maxSpan = Math.max(latSpan, lonSpan);
+
+    let altitude = maxSpan / 20;
+    altitude = Math.max(0.3, Math.min(altitude, 2.2)); // от 0.3 до 2.2
+
+    globe.pointOfView({ lat: centerLat, lng: centerLon, altitude }, 1500);
+  }
+
+
+
+    setTimeout(() => {
+
+
+  let hoveredLabel = null;
+
+globe
+  .labelsData(filtered)
+  .labelLat(d => +d.fin_lat)
+  .labelLng(d => +d.fin_lon)
+  .labelText(d => selectedYear === 'all' ? '' : (d.stadt || ''))
+  .labelSize(0.2)
+  .labelDotRadius(0.2)
+  .labelColor(f =>
+    selectedYear === 'all' ? '#285d18' :
+    (f && hoveredLabel && f.stadt === hoveredLabel.stadt ? 'orange' : '#285d18')
+  )
+  .labelAltitude(0.001);
+
+  const arcsData = filtered.map(d => ({
+    startLat: d.start_lat,
+    startLng: d.start_lon,
+    endLat: +d.fin_lat,
+    endLng: +d.fin_lon,
+    color: ['rgba(100, 100, 0, 0.7)', 'rgba(0, 100, 0, 0.7)']
+  }));
+
+  globe.arcsData(arcsData)
+    .arcAltitudeAutoScale(0.25)
+    .arcColor('color')
+    .arcDashLength(() => 0.5)
+    .arcDashGap(() => 0.01)
+    .arcDashInitialGap(() => Math.random())
+    .arcDashAnimateTime(() => 5000)
+    .arcStroke(0.05)
+    .arcsPointerEvents(false);
+}, 100); // 1 тик задержки
+
+
+
+   globe.onLabelClick((d, prev) => {
+
+  hoveredLabel = d || null;
+
+  // Обновляем стиль (цвет + высота)
+  globe.labelColor(f => f && hoveredLabel && f.stadt === hoveredLabel.stadt ? 'orange' : '#285d18')
+
+
+  // Обновляем инфобокс
+  if (d) {
+    yearBox.textContent = d.jahr || '-';
+    countryBox.textContent = d.land || '-';
+    zooBox.textContent = d.zoo_name || '-';
+  } else {
+    yearBox.textContent = '-';
+    countryBox.textContent = '-';
+    zooBox.textContent = '-';
+  }
 });
+
+  
+
+updateMap(selectedYear);
+
+  }
+
+  
+
+  
 </script>
 </body>
 </html>
