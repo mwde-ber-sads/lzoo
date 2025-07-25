@@ -75,13 +75,13 @@
     }
 
     #infoPanel, #yearSidebar {
-  pointer-events: none; /* Пропускают мышь сквозь себя */
+  pointer-events: none; 
 
 }
 
 #infoPanel * , #yearSidebar * {
   
-  pointer-events: auto; /* Но сами текстовые элементы всё равно кликабельны */
+  pointer-events: auto; 
 }
 
     .info-block {
@@ -242,25 +242,6 @@ const zooBox = document.getElementById('info-zoo');
   globe.enablePointerInteraction(true);
   globe.lineHoverPrecision(0.1);
 
-  const leipzigMarker = [{
-    lat: 51.33408756923266,
-    lng: 12.379851431478888,
-    size: 65,
-    title: "Zoo Leipzig"
-  }];
-
-  
-  globe
-    .htmlElementsData(leipzigMarker)
-    .htmlElement(d => {
-      const el = document.createElement('div');
-      el.innerHTML = `<img src="./zoo_leipzig_logo.svg" title="${d.title}" style="width: ${d.size}px;">`;
-      el.style.pointerEvents = 'none';
-      return el;
-    })
-    .htmlElementVisibilityModifier((el, visible) => {
-      el.style.opacity = visible ? 0.85 : 1;
-    });
 
 
   let fullData = [];
@@ -289,7 +270,6 @@ sidebar.appendChild(tip);
       allItem.dataset.year = 'all';
       sidebar.appendChild(allItem);
 
-      // Группировка по декадам
       const decadeMap = {};
       fullData.forEach(d => {
         const year = d.jahr;
@@ -359,7 +339,7 @@ Promise.all([
 ]).then(([brdData, ddrData]) => {
   geoBRD = brdData;
   geoDDR = ddrData;
-  updateMap(currentSelectedYear); // запуск первой отрисовки
+  updateMap(currentSelectedYear); 
 });
 
 function updateMap(selectedYear) {
@@ -386,6 +366,27 @@ function updateMap(selectedYear) {
     .polygonStrokeColor(() => '#ffffff');
 }
 
+
+
+  const leipzigMarker = [{
+    lat: 51.33408756923266,
+    lng: 12.379851431478888,
+    size: 65,
+    title: "Zoo Leipzig"
+  }];
+
+  
+  globe
+    .htmlElementsData(leipzigMarker)
+    .htmlElement(d => {
+      const el = document.createElement('div');
+      el.innerHTML = `<img src="./zoo_leipzig_logo.svg" title="${d.title}" style="width: ${d.size}px;">`;
+      el.style.pointerEvents = 'none';
+      return el;
+    })
+    .htmlElementVisibilityModifier((el, visible) => {
+      el.style.opacity = visible ? 0.85 : 1;
+    });
   
 
   function renderPoints(selectedYear) {
@@ -459,19 +460,14 @@ globe
     .arcDashAnimateTime(() => 5000)
     .arcStroke(0.05)
     .arcsPointerEvents(false);
-}, 100); // 1 тик задержки
-
+}, 100); 
 
 
    globe.onLabelClick((d, prev) => {
 
   hoveredLabel = d || null;
-
-  // Обновляем стиль (цвет + высота)
   globe.labelColor(f => f && hoveredLabel && f.stadt === hoveredLabel.stadt ? 'orange' : '#285d18')
-
-
-  // Обновляем инфобокс
+  
   if (d) {
     yearBox.textContent = d.jahr || '-';
     countryBox.textContent = d.land || '-';
@@ -483,7 +479,6 @@ globe
   }
 });
 
-  
 
 updateMap(selectedYear);
 
