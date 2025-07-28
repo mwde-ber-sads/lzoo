@@ -350,7 +350,7 @@ function updateMap(selectedYear) {
     polygons = geoBRD.features || [];
   } else {
     const year = parseInt(selectedYear);
-    if (year < 1989) {
+    if (year < 1990) {
       polygons = geoDDR.features || [];
       isDDR = true;
     } else {
