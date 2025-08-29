@@ -1,0 +1,384 @@
+/* =========================
+   Noto Sans Full Integration
+   ========================= */
+@font-face {
+  font-family: 'Noto Sans';
+  src: url('./fonts/NotoSans-Thin.ttf') format('truetype');
+  font-weight: 100;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Noto Sans';
+  src: url('./fonts/NotoSans-ThinItalic.ttf') format('truetype');
+  font-weight: 100;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'Noto Sans';
+  src: url('./fonts/NotoSans-ExtraLight.ttf') format('truetype');
+  font-weight: 200;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Noto Sans';
+  src: url('./fonts/NotoSans-ExtraLightItalic.ttf') format('truetype');
+  font-weight: 200;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'Noto Sans';
+  src: url('./fonts/NotoSans-Light.ttf') format('truetype');
+  font-weight: 300;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Noto Sans';
+  src: url('./fonts/NotoSans-LightItalic.ttf') format('truetype');
+  font-weight: 300;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'Noto Sans';
+  src: url('./fonts/NotoSans-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Noto Sans';
+  src: url('./fonts/NotoSans-Italic.ttf') format('truetype');
+  font-weight: 400;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'Noto Sans';
+  src: url('./fonts/NotoSans-Medium.ttf') format('truetype');
+  font-weight: 500;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Noto Sans';
+  src: url('./fonts/NotoSans-MediumItalic.ttf') format('truetype');
+  font-weight: 500;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'Noto Sans';
+  src: url('./fonts/NotoSans-SemiBold.ttf') format('truetype');
+  font-weight: 600;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Noto Sans';
+  src: url('./fonts/NotoSans-SemiBoldItalic.ttf') format('truetype');
+  font-weight: 600;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'Noto Sans';
+  src: url('./fonts/NotoSans-Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Noto Sans';
+  src: url('./fonts/NotoSans-BoldItalic.ttf') format('truetype');
+  font-weight: 700;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'Noto Sans';
+  src: url('./fonts/NotoSans-ExtraBold.ttf') format('truetype');
+  font-weight: 800;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Noto Sans';
+  src: url('./fonts/NotoSans-ExtraBoldItalic.ttf') format('truetype');
+  font-weight: 800;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'Noto Sans';
+  src: url('./fonts/NotoSans-Black.ttf') format('truetype');
+  font-weight: 900;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Noto Sans';
+  src: url('./fonts/NotoSans-BlackItalic.ttf') format('truetype');
+  font-weight: 900;
+  font-style: italic;
+}
+@font-face {
+  font-family: 'Kosmik-Bold';
+  src: url('./fonts/Kosmik-BoldThree Regular.otf') format('opentype');
+}
+
+
+/* =========================
+   Global Styles
+   ========================= */
+body {
+  margin: 0;
+  background-image: url('./background-thumbnail.jpg');
+  background-size: 1260px;
+  background-repeat: no-repeat;
+  height: 3000px;
+  font-family: 'Kosmik-Bold', sans-serif;
+}
+
+
+/* =========================
+   Layout Containers
+   ========================= */
+#container {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: center;
+  margin-top: 240px;
+  margin-left: 70px;
+  max-width: 1120px;
+  position: relative;
+
+}
+
+#globeWrapper {
+  width: 1120px;
+  height: 725px;
+  margin: 0 auto;
+  position: relative;
+
+  
+}
+
+#globeClip {
+  width: 100%;
+  height: 725px;
+  overflow: hidden;
+  position: absolute;
+border-radius: 10px;
+
+
+}
+
+#globeViz {
+
+      transform: translateY(-95px);
+}
+
+/* =========================
+   Sidebar & Info Panel
+   ========================= */
+
+
+#topPanels {
+  position: absolute;
+  display: flex;
+  flex-direction: row;
+  border-style: solid;
+  border-color: black;
+  
+  z-index: 50;
+}
+
+
+#yearSidebar {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  width: 100px;
+  max-height: 600px;
+  padding: 20px;
+  margin-right: 10px;
+  background-color: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(4px);
+  line-height: 10px;
+  border-radius: 5px;
+  z-index: 10;
+}
+
+#infoPanel {
+  position: absolute;
+  font-size: 20px;
+  top: 20px;
+  left: 840px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  padding: 20px;
+  background-color: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(2px);
+  border-radius: 5px;
+  z-index: 50;
+  margin-right: 20px;
+  width: 220px;
+}
+
+#tipsPanel {
+  position: absolute;
+  top: 20px;
+  left: 190px;
+  display: flex;
+  gap: 15px;
+  padding: 20px;
+  background-color: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(2px);
+  border-radius: 5px;
+  z-index: 50;
+  margin-right: 20px;
+  width: 580px;
+}
+
+#infoBar {
+  position: absolute;
+  left: 0;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+  font-size: 20px;
+  color: #222;
+  z-index: 10;
+}
+
+/* =========================
+   Info Blocks & Text Styles
+   ========================= */
+.info-block {
+  padding: 8px 12px;
+  background: rgba(255, 255, 255, 0.85);
+  border-radius: 6px;
+  min-width: 120px;
+  text-align: center;
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.1);
+}
+
+.info-value {
+  font-size: 30px;
+  line-height: 20px;
+  font-weight: 700;
+  color: #285d18;
+}
+
+#sidebar-tip,
+#sidebar-tip-2,
+#sidebar-tip-3 {
+  font-size: 22px;
+  line-height: 22px;
+  margin: 0;
+  color: #000000;
+}
+
+#sidebar-tip-2 {
+}
+
+#footerNote {
+  position: absolute;
+  font-family: 'Noto Sans', sans-serif;
+  font-weight: 600;
+  left: 25px;
+  bottom: 15px;
+  font-size: 10px;
+  line-height: 3px;
+  color: #5d7157;
+  padding: 5px;
+  border-radius: 5px;
+  z-index: 5;
+}
+
+/* =========================
+   Year & Decade Styling
+   ========================= */
+.decade-header {
+  cursor: pointer;
+  font-size: 20px;
+  margin-top: 12px;
+  color: #285d18;
+  border-top: solid;
+  padding-top: 10px;
+  padding-left: 4px;
+}
+
+.year-list {
+  /* Can add additional styles if needed */
+}
+
+.year-list.hidden {
+  display: none;
+}
+
+.year-item {
+  cursor: pointer;
+  padding-top: 17px;
+  padding-left: 10px;
+  font-size: 18px;
+  color: #285d18;
+  font-weight: 500;
+}
+
+.year-item.active {
+  color: #F28A00;
+}
+
+/* =========================
+   Pointer Events
+   ========================= */
+#infoPanel,
+#yearSidebar {
+  pointer-events: none;
+}
+
+#infoPanel *,
+#yearSidebar * {
+  pointer-events: auto;
+}
+
+#sidebar-tip::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: -10px;
+  transform: translateY(-50%);
+  width: 0;
+  height: 0;
+  border-top: 8px solid transparent;
+  border-bottom: 8px solid transparent;
+  border-right: 10px solid rgba(255, 255, 255, 0.75);
+  backdrop-filter: blur(2px);
+}
+
+#sidebar-tip-2::before {
+  content: "";
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-top: 10px solid rgba(255, 255, 255, 0.75);
+  backdrop-filter: blur(2px);
+}
+
+#sidebar-tip-3::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  right: -10px;
+  transform: translateY(-50%);
+  width: 0;
+  height: 0;
+  border-top: 8px solid transparent;
+  border-bottom: 8px solid transparent;
+  border-left: 10px solid rgba(255, 255, 255, 0.75);
+  backdrop-filter: blur(2px);
+}
