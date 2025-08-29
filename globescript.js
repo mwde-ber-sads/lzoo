@@ -1,21 +1,19 @@
 // === Initialization ===
 
-const tip = document.createElement('p');
-tip.id = 'sidebar-tip';
-tip.textContent = '3. Klicken Sie auf eine Stadt auf dem Globus, um den Zoonamen und Infos am rechts zu sehen';
-document.getElementById('tipsPanel').insertBefore(tip, document.getElementById('tipsPanel').firstChild);
+const tips = [
+  { id: 'sidebar-tip',   text: '3. Klicken Sie auf eine Stadt auf dem Globus, um den Zoonamen und Infos am rechts zu sehen' },
+  { id: 'sidebar-tip-2', text: '2. Der Globus kann mit dem Mausrad oder den Fingern vergrößert oder verkleinert werden' },
+  { id: 'sidebar-tip-3', text: '1. Klicke auf eine Dekade am links, um ein Jahr der Vereinsreisen auszuwählen' }
+];
 
-const tip2 = document.createElement('p');
-tip2.id = 'sidebar-tip-2';
-tip2.textContent = '2. Der Globus kann mit dem Mausrad oder den Fingern vergrößert oder verkleinert werden';
-document.getElementById('tipsPanel').insertBefore(tip2, document.getElementById('tipsPanel').firstChild);
+const tipsPanel = document.getElementById('tipsPanel');
 
-const tip3 = document.createElement('p');
-tip3.id = 'sidebar-tip-3';
-tip3.textContent = '1. Klicke auf eine Dekade am links, um ein Jahr der Vereinsreisen auszuwählen';
-document.getElementById('tipsPanel').insertBefore(tip3, document.getElementById('tipsPanel').firstChild);
-
-
+tips.forEach(tip => {
+  const p = document.createElement('p');
+  p.id = tip.id;
+  p.textContent = tip.text;
+  tipsPanel.insertBefore(p, tipsPanel.firstChild);
+});
 
 const yearBox = document.getElementById('info-year');
 const countryBox = document.getElementById('info-country');
@@ -39,7 +37,6 @@ globe.polygonsTransitionDuration(0);
 let fullData = [];
 let currentSelectedYear = 'all';
 let geoDDR, geoBRD;
-
 let hoveredLabel = null;
 let selectedLabel = null;
 
@@ -174,10 +171,14 @@ globe
     el.style.opacity = visible ? 0.85 : 1;
   });
 
+
+
   // === Autoupdate on altitude ===
 globe.controls().addEventListener('change', () => {
   globe.labelsData(globe.labelsData());
 });
+
+
 
 // === RENDER POINTS ===
 function renderPoints(selectedYear) {
@@ -226,33 +227,27 @@ function renderPoints(selectedYear) {
       .labelLng(d => +d.fin_lon)
       .labelText(d => selectedYear === 'all' ? '' : (d.stadt || ''))
       .labelDotOrientation(d => d.label_orientation || 'bottom')
-        .labelColor(f => {
-    if (f === selectedLabel) return '#F28A00'; // кликнутый остаётся оранжевым
-    if (f === hoveredLabel) return '#F28A00';  // наведённый временно оранжевый
-    return '#285d18';                          // дефолт зелёный
-})
+      .labelColor(f => {
+        if (f === selectedLabel) return '#F28A00'; 
+        if (f === hoveredLabel) return '#F28A00'; 
+        return '#285d18';})
       .labelAltitude(0.004)
-       .labelSize(() => {
-   const altitude = globe.pointOfView().altitude || 1;
-    return 0.44 * (altitude + 0.33);
-})
-
-  .labelDotRadius(() => {
-    const altitude = globe.pointOfView().altitude || 1;
-    return 0.3 / Math.log(altitude + 3.8);
-  })
+      .labelSize(() => {
+        const altitude = globe.pointOfView().altitude || 1;
+        return 0.44 * (altitude + 0.33);})
+      .labelDotRadius(() => {
+        const altitude = globe.pointOfView().altitude || 1;
+        return 0.4 / Math.log(altitude + 3.8);})
       .labelResolution(1);
-
 
 // === Hover ===
 globe.onLabelHover(d => {
   hoveredLabel = d || null;
-  globe.labelColor(globe.labelColor()); // форсируем перерисовку
+  globe.labelColor(globe.labelColor()); 
 });
 
 // === Click ===
 globe.onLabelClick(d => {
-  // если нажали на уже выбранный город → сбросить
   if (selectedLabel === d) {
     selectedLabel = null;
     yearBox.textContent = '-';
@@ -267,7 +262,6 @@ globe.onLabelClick(d => {
       zooBox.textContent = d.zoo_name || '-';
       reiseBox.textContent = d.reise || '-';
 
-      // центрируем карту на выбранный город
       globe.pointOfView({ 
         lat: +d.fin_lat, 
         lng: +d.fin_lon, 
@@ -276,7 +270,7 @@ globe.onLabelClick(d => {
     }
   }
 
-  globe.labelColor(globe.labelColor()); // обновляем цвета
+  globe.labelColor(globe.labelColor());
 });
 
     const arcsData = filtered.map(d => ({
