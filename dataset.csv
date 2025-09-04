@@ -132,7 +132,7 @@ jahr,reise,stadt,land,zoo_name,start_lat,start_lon,fin_lat,fin_lon,label_orienta
 2003,Polen Reise,Wroclaw,Polen,Zoo Wroclaw,50.28096189,18.99123072,51.10577995,17.07407873,right,,,,,
 2003,Polen Reise,Görlitz,Deutschland,Heimattiergarten Görlitz,51.08804408,17.03501023,51.14868418,14.96864624,top,,,,,
 2003,,Nürnberg,Deutschland,Zoo Nürnberg,51.34838942,12.37031027,49.44857189,11.14432125,bottom,,,,,
-2004,,Münster,Deutschland,Allwetterzoo Münster,Allwetterzoo Münster,12.37031027,51.94788653,7.589551314,right,,,,,
+2004,,Münster,Deutschland,Allwetterzoo Münster,51.34838942,12.37031027,51.94788653,7.589551314,right,,,,,
 2004,,Arnheim,Niederlande,Zoo Arnheim,51.94788653,7.589551314,52.00723539,5.89829855,top,,,,,
 2004,,Rotterdam,Niederlande,Zoo Rotterdam,52.00723539,5.89829855,51.92819719,4.444081631,bottom,,,,,
 2004,,Emmen,Niederlande,Zoo Emmen,51.92819719,4.444081631,52.78247088,6.891019326,top,,,,,
