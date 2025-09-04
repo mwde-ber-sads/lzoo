@@ -1,10 +1,12 @@
 // === Initialization ===
 
 const tips = [
-  { id: 'sidebar-tip',   text: '3. Klicken Sie auf eine Stadt auf dem Globus, um den Zoonamen und Infos am rechts zu sehen' },
-  { id: 'sidebar-tip-2', text: '2. Der Globus kann mit dem Mausrad oder den Fingern vergrößert oder verkleinert werden' },
-  { id: 'sidebar-tip-3', text: '1. Klicke auf eine Dekade am links, um ein Jahr der Vereinsreisen auszuwählen' }
+  { id: 'sidebar-tip-4', text: '📍  Klicke auf eine Stadt auf dem Globus, um den Zoonamen und Infos in dem Kasten rechts zu sehen' },
+  { id: 'sidebar-tip',   text: '🔄  Bewege den Globus mit der Maus oder dem Finger in jede gewünschte Richtung' },
+  { id: 'sidebar-tip-2', text: '🔎  Der Globus kann mit dem Mausrad oder den Fingern vergrößert oder verkleinert werden' },
+  { id: 'sidebar-tip-3', text: '📅  Klicke auf eine Dekade links, um ein Jahr der Vereinsreisen auszuwählen' },
 ];
+
 
 const tipsPanel = document.getElementById('tipsPanel');
 
@@ -19,7 +21,6 @@ const yearBox = document.getElementById('info-year');
 const countryBox = document.getElementById('info-country');
 const zooBox = document.getElementById('info-zoo');
 const reiseBox = document.getElementById('info-reise');
-
 const globe = Globe()
   .globeImageUrl('./map-texture.jpg')
   .backgroundColor('rgba(0,0,0,0)')
@@ -39,9 +40,17 @@ let currentSelectedYear = 'all';
 let geoDDR, geoBRD;
 let hoveredLabel = null;
 let selectedLabel = null;
+let notoTypeface = null;
+
+fetch('./fonts/noto-sans-regular.json')
+  .then(r => r.json())
+  .then(json => {
+    notoTypeface = json;
+    globe.labelsData(globe.labelsData());
+  });
 
 // === Data Loading ===
-fetch('./dataset-leipzig-zoo-reise-final.csv')
+fetch('./dataset.csv')
   .then(res => res.text())
   .then(csv => {
     const parsed = Papa.parse(csv, { header: true });
@@ -135,7 +144,7 @@ function updateMap(selectedYear) {
     polygons = geoBRD.features || [];
   } else {
     const year = parseInt(selectedYear);
-    if (year < 1989) {
+    if (year < 1990) {
       polygons = geoDDR.features || [];
       isDDR = true;
     } else {
@@ -238,13 +247,17 @@ function renderPoints(selectedYear) {
       .labelDotRadius(() => {
         const altitude = globe.pointOfView().altitude || 1;
         return 0.4 / Math.log(altitude + 3.8);})
+      .labelTypeFace(notoTypeface)
       .labelResolution(1);
+      
 
 // === Hover ===
 globe.onLabelHover(d => {
   hoveredLabel = d || null;
   globe.labelColor(globe.labelColor()); 
 });
+
+
 
 // === Click ===
 globe.onLabelClick(d => {

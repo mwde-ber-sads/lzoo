@@ -1,6 +1,7 @@
 /* =========================
    Noto Sans Full Integration
    ========================= */
+   
 @font-face {
   font-family: 'Noto Sans';
   src: url('./fonts/NotoSans-Thin.ttf') format('truetype');
@@ -186,7 +187,6 @@ border-radius: 10px;
   flex-direction: row;
   border-style: solid;
   border-color: black;
-  
   z-index: 50;
 }
 
@@ -199,7 +199,7 @@ border-radius: 10px;
   max-height: 600px;
   padding: 20px;
   margin-right: 10px;
-  background-color: rgba(255, 255, 255, 0.7);
+  background-color: rgba(255, 255, 255, 0.5);
   backdrop-filter: blur(4px);
   line-height: 10px;
   border-radius: 5px;
@@ -215,7 +215,7 @@ border-radius: 10px;
   flex-direction: column;
   gap: 15px;
   padding: 20px;
-  background-color: rgba(255, 255, 255, 0.7);
+  background-color: rgba(255, 255, 255, 0.5);
   backdrop-filter: blur(2px);
   border-radius: 5px;
   z-index: 50;
@@ -225,17 +225,17 @@ border-radius: 10px;
 
 #tipsPanel {
   position: absolute;
-  top: 20px;
-  left: 190px;
-  display: flex;
+  bottom: 20px;
+  left: 200px;
+  display: grid;
+  grid-template-columns: 135px 135px 135px 135px ;
   gap: 15px;
   padding: 20px;
-  background-color: rgba(255, 255, 255, 0.7);
+  background-color: rgba(255, 255, 255, 0.5);
   backdrop-filter: blur(2px);
   border-radius: 5px;
   z-index: 50;
-  margin-right: 20px;
-  width: 580px;
+  width: 590px;
 }
 
 #infoBar {
@@ -270,24 +270,25 @@ border-radius: 10px;
 
 #sidebar-tip,
 #sidebar-tip-2,
-#sidebar-tip-3 {
-  font-size: 22px;
-  line-height: 22px;
+#sidebar-tip-3,
+#sidebar-tip-4 {
+  font-size: 18px;
+  line-height: 20px;
   margin: 0;
-  color: #000000;
+  color: #285d18;
+
 }
 
-#sidebar-tip-2 {
-}
 
 #footerNote {
   position: absolute;
   font-family: 'Noto Sans', sans-serif;
   font-weight: 600;
-  left: 25px;
+  width: 230px;
+  right: 25px;
   bottom: 15px;
-  font-size: 10px;
-  line-height: 3px;
+  font-size: 8px;
+  line-height: 10px;
   color: #5d7157;
   padding: 5px;
   border-radius: 5px;
@@ -341,44 +342,3 @@ border-radius: 10px;
   pointer-events: auto;
 }
 
-#sidebar-tip::before {
-  content: "";
-  position: absolute;
-  top: 50%;
-  left: -10px;
-  transform: translateY(-50%);
-  width: 0;
-  height: 0;
-  border-top: 8px solid transparent;
-  border-bottom: 8px solid transparent;
-  border-right: 10px solid rgba(255, 255, 255, 0.75);
-  backdrop-filter: blur(2px);
-}
-
-#sidebar-tip-2::before {
-  content: "";
-  position: absolute;
-  bottom: -10px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 0;
-  height: 0;
-  border-left: 8px solid transparent;
-  border-right: 8px solid transparent;
-  border-top: 10px solid rgba(255, 255, 255, 0.75);
-  backdrop-filter: blur(2px);
-}
-
-#sidebar-tip-3::before {
-  content: "";
-  position: absolute;
-  top: 50%;
-  right: -10px;
-  transform: translateY(-50%);
-  width: 0;
-  height: 0;
-  border-top: 8px solid transparent;
-  border-bottom: 8px solid transparent;
-  border-left: 10px solid rgba(255, 255, 255, 0.75);
-  backdrop-filter: blur(2px);
-}
