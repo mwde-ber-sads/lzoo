@@ -4,15 +4,30 @@
   <meta charset="UTF-8">
   <title>Globe with Filter</title>
   <link rel="stylesheet" type="text/css" href="./styles.css">
-  <script src="https://cdn.jsdelivr.net/npm/globe.gl"></script>
-  <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
-  <script src="https://unpkg.com/three@0.148.0/build/three.min.js"></script>
-<script src="https://unpkg.com/three-spritetext"></script>
-<script src="https://unpkg.com/facetype"></script>
+  <script src="./loader.js"></script>
 </head>
 <body>
 
 <div id="container">
+    <!-- === CONSENT BANNER === -->
+<div id="consent-banner">
+  <div id="consent-box">
+    <h2>🌍 Interaktiver Globus wird geladen</h2>
+    <p>
+      Für die Darstellung des Globus werden externe JavaScript-Bibliotheken geladen:
+      <a href="https://globe.gl/" target="_blank" rel="noopener noreferrer">Globe.GL</a>,
+      <a href="https://www.papaparse.com/" target="_blank" rel="noopener noreferrer">PapaParse</a>
+      und
+      <a href="https://github.com/facetype-js/facetype" target="_blank" rel="noopener noreferrer">Facetype</a>.
+      Diese laden zusätzliche Daten und 3D-Texturen aus dem Internet.
+    </p>
+    <p>
+      Durch Klick auf <b>„Akzeptieren und laden“</b> werden diese Ressourcen heruntergeladen und der interaktive Globus gestartet.
+    </p>
+    <button id="accept-btn">✅ Akzeptieren und laden</button>
+  </div>
+</div>
+
   <div id="yearSidebar"></div>
   <div id="tipsPanel"></div>
   <div id="infoPanel">
@@ -28,12 +43,33 @@
      <p> Globetextur Copyright: Texture Free HD 20k x10K Earth World Map Texture By Giallo86</div>
   </div>
   
+
   
   <div id="globeWrapper">
      <div id="globeClip">
     <div id="globeViz"></div></div>
   </div>
 </div>
-<script src="./globescript.js"></script>
+<script>
+document.getElementById('accept-btn').addEventListener('click', () => {
+  const banner = document.getElementById('consent-banner');
+  banner.style.display = 'none';
+
+  // === динамическая загрузка скриптов ===
+  const libs = [
+    "https://cdn.jsdelivr.net/npm/globe.gl",
+    "https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js",
+    "https://unpkg.com/facetype",
+    "./globescript.js"
+  ];
+
+  libs.forEach(src => {
+    const s = document.createElement('script');
+    s.src = src;
+    s.async = false;
+    document.body.appendChild(s);
+  });
+});
+</script>
 </body>
 </html>

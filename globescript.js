@@ -26,7 +26,7 @@ const globe = Globe()
   .backgroundColor('rgba(0,0,0,0)')
   .width(1120)
   .height(900)
-  .atmosphereColor('rgba(255,255,255,0)')
+  .atmosphereColor('#ffffff')
   .atmosphereAltitude(0.15)
   (document.getElementById('globeViz'));
 
@@ -46,8 +46,13 @@ fetch('./fonts/noto-sans-regular.json')
   .then(r => r.json())
   .then(json => {
     notoTypeface = json;
+    globe
+      .labelTypeFace(notoTypeface)
+      .labelResolution(1);
+
     globe.labelsData(globe.labelsData());
-  });
+  })
+  .catch(err => console.error("Ошибка загрузки шрифта:", err));
 
 // === Data Loading ===
 fetch('./dataset.csv')
@@ -138,17 +143,19 @@ function buildSidebar(data) {
 // === Map DDR / Germany Update Function ===
 function updateMap(selectedYear) {
   let polygons = [];
-  let isDDR = false;
+
+  if (!geoBRD || !geoDDR) {
+    return;
+  }
 
   if (selectedYear === 'all') {
-    polygons = geoBRD.features || [];
+    polygons = geoBRD.features || geoBRD;
   } else {
     const year = parseInt(selectedYear);
     if (year < 1990) {
-      polygons = geoDDR.features || [];
-      isDDR = true;
+      polygons = geoDDR.features || geoDDR;
     } else {
-      polygons = geoBRD.features || [];
+      polygons = geoBRD.features || geoBRD;
     }
   }
 
@@ -246,9 +253,7 @@ function renderPoints(selectedYear) {
         return 0.44 * (altitude + 0.33);})
       .labelDotRadius(() => {
         const altitude = globe.pointOfView().altitude || 1;
-        return 0.4 / Math.log(altitude + 3.8);})
-      .labelTypeFace(notoTypeface)
-      .labelResolution(1);
+        return 0.4 / Math.log(altitude + 3.8);});
       
 
 // === Hover ===
