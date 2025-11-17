@@ -1,3 +1,5 @@
+
+
 /* =========================
    Noto Sans Full Integration
    ========================= */
@@ -344,10 +346,14 @@ border-radius: 10px;
 }
 
 
-/* === CONSENT BANNER (центр внутри #container) === */
+/* =========================
+   Consent Banner Styles
+   ========================= */
+
+
 #consent-banner {
-  position: absolute;         /* ключ: теперь внутри контейнера */
-  inset: 0;                   /* top:0; right:0; bottom:0; left:0; */
+  position: absolute;       
+  inset: 0;      
   background: rgba(255,255,255,0.05);
   display: flex;
   justify-content: center;
@@ -355,8 +361,8 @@ border-radius: 10px;
   z-index: 9999;
   text-align: center;
   padding: 20px;
-  border-radius: 10px;        /* чтобы повторить общий стиль */
-  backdrop-filter: blur(2px); /* лёгкий фон */
+  border-radius: 10px;     
+  backdrop-filter: blur(2px); 
 }
 
 #consent-box {
@@ -393,86 +399,131 @@ border-radius: 10px;
   transform: scale(1.05);
 }
 
-
 /* =========================
-   Mobile Layout
+   MOBILE LAYOUT
    ========================= */
-@media (max-width: 576px) {
-  #container {
-    flex-direction: column;
-    align-items: center;
-    margin: 0 auto;
-    width: 100%;
-    height: 700px;
+@media (max-width: 768px) {
 
+  /* Общий контейнер становится вертикальным */
+  #container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    align-items: center;
   }
 
-  /* --- Tips сверху --- */
+  /* ===== tipsPanel ===== */
   #tipsPanel {
-    position: relative;
-    top: 10px;
-    left: auto;
-    width: 85%;
-    margin: 10px auto;
-    grid-template-columns: 1fr 1fr;
+    width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+    display: flex;
+    box-sizing: border-box;
+    background: rgba(255,255,255,0.0);
+    left: 0;
+    top: 0;
+    height: 130px;
+    padding: 10px;
     gap: 10px;
   }
 
-  /* --- Глобус занимает центр --- */
+  #tipsPanel p {
+    min-width: 180px;
+    font-size: 18px;
+    line-height: 20px;
+    display: flex;
+    padding-left: 2%;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255,255,255,0.7);
+    border-radius: 8px;
+  }
+
+  /* ===== globewrapper ===== */
   #globeWrapper {
-    position: absolute;
-
-    padding-top: 700px;
-
+    width: 100%;
+    margin: 0 auto;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
   }
 
   #globeClip {
+    width: 100%;
     height: 100%;
+    border-radius: 0;
   }
 
-#globeViz {
-  transform: translate(-350px, -100px);
+  #globeViz {
+    transform: translateY(0px) !important;
+  }
 
-}
-
-
-  /* --- Сайдбар по годам внутри карты сверху слева --- */
+  
+  /* ===== Year Sidebar ===== */
   #yearSidebar {
     position: absolute;
-    top: 500px;
-    left: 10px;
-    width: auto;
-    max-height: 40%;
-    font-size: 14px;
-    background-color: rgba(255, 255, 255, 0.7);
+    top: 130px!important;
+    left: 2%;
+    width: 25%;
+    height: auto;
+    line-height: 9px;
+    padding: 13px;
+    background: rgba(255,255,255,0.8);
+    z-index: 20;
+    backdrop-filter: blur(4px);
   }
 
-  /* --- Инфопанель внутри карты снизу --- */
+.decade-header {
+    font-size: 18px;
+  }
+
+.year-item {
+    padding-top: 16px;
+    font-size: 18px;
+  }
+  
+  /* ===== infoPanel ===== */
   #infoPanel {
     position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 85%;
-    font-size: 14px;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: space-around;
+    bottom: 10px!important;
+    left: 2%;
+    top: auto;
+    height: auto;
+    width: auto;
+    background: rgba(255,255,255,0.8);
+    backdrop-filter: blur(4px);
+    padding: 14px;
+
+
+    overflow-x: auto;
+    overflow-y: hidden;
+
+    display: flex;
+    flex-direction: row;       
+    justify-content: space-between;
+    align-items: flex-start;
+    box-sizing: border-box;
     gap: 10px;
-    height: 100px;
-    background-color: rgba(255, 255, 255, 0.7);
+
+    font-size: 18px;
+    z-index: 20;
   }
 
-  #infoPanel div {
-    flex: 1 1 20%;
-    text-align: center;
+  .info-value {
+    font-size: 22px !important;
   }
 
+  /* ===== Footer ===== */
   #footerNote {
     position: relative;
-    margin: 15px auto;
+    width: 100%;
+    height: 50px;
+    left: 10px;
     text-align: center;
-    width: 90%;
-    font-size: 8px;
+    padding-top: 15px;
+    bottom: 100px;
   }
-
 }
