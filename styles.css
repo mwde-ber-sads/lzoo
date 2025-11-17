@@ -441,6 +441,12 @@ border-radius: 10px;
     border-radius: 8px;
   }
 
+.decade-header {
+  border-top: solid;
+  border-width: 3px;
+}  
+
+
   /* ===== globewrapper ===== */
   #globeWrapper {
     width: 100%;
@@ -465,7 +471,7 @@ border-radius: 10px;
   /* ===== Year Sidebar ===== */
   #yearSidebar {
     position: absolute;
-    top: 130px!important;
+    top: 215px!important;
     left: 2%;
     width: 25%;
     height: auto;
@@ -488,9 +494,9 @@ border-radius: 10px;
   /* ===== infoPanel ===== */
   #infoPanel {
     position: absolute;
-    bottom: 10px!important;
+    top: 130px!important;
     left: 2%;
-    top: auto;
+    bottom: auto;
     height: auto;
     width: auto;
     background: rgba(255,255,255,0.8);
