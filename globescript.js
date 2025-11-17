@@ -17,6 +17,17 @@ tips.forEach(tip => {
   tipsPanel.insertBefore(p, tipsPanel.firstChild);
 });
 
+function getGlobeSize() {
+  const viewport = window.innerWidth;
+
+  if (viewport <= 768) {
+    return { width: window.innerWidth, height: 800 };
+  } else {
+    return { width: 1120, height: 900 };
+  }
+}
+
+const size = getGlobeSize();
 const yearBox = document.getElementById('info-year');
 const countryBox = document.getElementById('info-country');
 const zooBox = document.getElementById('info-zoo');
@@ -24,8 +35,8 @@ const reiseBox = document.getElementById('info-reise');
 const globe = Globe()
   .globeImageUrl('./map-texture.jpg')
   .backgroundColor('rgba(0,0,0,0)')
-  .width(1120)
-  .height(900)
+  .width(size.width)
+  .height(size.height)
   .atmosphereColor('#ffffff')
   .atmosphereAltitude(0.15)
   (document.getElementById('globeViz'));
@@ -263,6 +274,16 @@ globe.onLabelHover(d => {
 });
 
 
+// === MOBILE DROPDOWN FOR YEAR SIDEBAR ===
+const yearSidebar = document.getElementById('yearSidebar');
+
+yearSidebar.addEventListener('click', (e) => {
+  if (e.target.id === 'yearSidebar' || e.target.closest('#yearSidebar')) {
+    yearSidebar.classList.toggle('open');
+  }
+});
+
+
 
 // === Click ===
 globe.onLabelClick(d => {
@@ -309,6 +330,14 @@ globe.onLabelClick(d => {
       .arcStroke(0.07);
 
        updateMap(selectedYear);
+
+       window.addEventListener("resize", () => {
+  const size = getGlobeSize();
+  globe.width(size.width);
+  globe.height(size.height);
+});
+
+       
 
 
 }
