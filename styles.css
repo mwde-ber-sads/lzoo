@@ -424,15 +424,15 @@ border-radius: 10px;
     background: rgba(255,255,255,0.0);
     left: 0;
     top: 0;
-    height: 130px;
+    height: 110px;
     padding: 10px;
     gap: 10px;
   }
 
   #tipsPanel p {
     min-width: 180px;
-    font-size: 18px;
-    line-height: 20px;
+    font-size: 16px;
+    line-height: 18px;
     display: flex;
     padding-left: 2%;
     align-items: center;
@@ -449,6 +449,7 @@ border-radius: 10px;
 
   /* ===== globewrapper ===== */
   #globeWrapper {
+    top: 37px;
     width: 100%;
     margin: 0 auto;
     position: relative;
@@ -471,11 +472,10 @@ border-radius: 10px;
   /* ===== Year Sidebar ===== */
   #yearSidebar {
     position: absolute;
-    top: 215px!important;
-    left: 2%;
+    top: 115px!important;
+    left: 3%;
     width: 25%;
     height: auto;
-    line-height: 9px;
     padding: 13px;
     background: rgba(255,255,255,0.8);
     z-index: 20;
@@ -494,15 +494,14 @@ border-radius: 10px;
   /* ===== infoPanel ===== */
   #infoPanel {
     position: absolute;
-    top: 130px!important;
-    left: 2%;
+    top: 680px!important;
+    left: 3%;
     bottom: auto;
     height: auto;
     width: auto;
     background: rgba(255,255,255,0.8);
     backdrop-filter: blur(4px);
     padding: 14px;
-
 
     overflow-x: auto;
     overflow-y: hidden;
