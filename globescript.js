@@ -20,12 +20,29 @@ tips.forEach(tip => {
 function getGlobeSize() {
   const viewport = window.innerWidth;
 
+  // Mobile
   if (viewport <= 768) {
-    return { width: window.innerWidth, height: 800 };
-  } else {
-    return { width: 1120, height: 900 };
+    return {
+      width: window.innerWidth,
+      height: 800
+    };
   }
+
+  // Tablet
+  if (viewport <= 1024) {
+    return {
+      width: window.innerWidth,
+      height: 850
+    };
+  }
+
+  // Desktop
+  return {
+    width: 1120,
+    height: 900
+  };
 }
+
 
 const size = getGlobeSize();
 const yearBox = document.getElementById('info-year');
@@ -89,6 +106,19 @@ Promise.all([
 function buildSidebar(data) {
   const sidebar = document.getElementById('yearSidebar');
   sidebar.innerHTML = '';
+
+  const futureYear = 2026;
+
+// Count even if dataset doesn't contain them yet
+const futureData = data.filter(d => parseInt(d.jahr) === futureYear);
+
+const futureItem = document.createElement('div');
+futureItem.className = 'year-item future-item';
+futureItem.textContent = `Bevorstehend (${futureData.length})`;
+futureItem.dataset.year = String(futureYear);
+
+// Insert at the very top
+sidebar.insertBefore(futureItem, sidebar.firstChild);
 
   const allItem = document.createElement('div');
   allItem.className = 'year-item active';
@@ -271,16 +301,6 @@ function renderPoints(selectedYear) {
 globe.onLabelHover(d => {
   hoveredLabel = d || null;
   globe.labelColor(globe.labelColor()); 
-});
-
-
-// === MOBILE DROPDOWN FOR YEAR SIDEBAR ===
-const yearSidebar = document.getElementById('yearSidebar');
-
-yearSidebar.addEventListener('click', (e) => {
-  if (e.target.id === 'yearSidebar' || e.target.closest('#yearSidebar')) {
-    yearSidebar.classList.toggle('open');
-  }
 });
 
 
