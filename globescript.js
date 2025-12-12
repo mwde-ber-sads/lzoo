@@ -294,7 +294,7 @@ function renderPoints(selectedYear) {
         return 0.44 * (altitude + 0.33);})
       .labelDotRadius(() => {
         const altitude = globe.pointOfView().altitude || 1;
-        return 0.4 / Math.log(altitude + 3.8);});
+        return 0.42 / Math.log(altitude + 6.0);});
       
 
 // === Hover ===
